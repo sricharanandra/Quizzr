@@ -256,9 +256,26 @@ function FormFill() {
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "";
     if (imagePath.startsWith("http")) return imagePath;
-    return `${UPLOAD_URL}${
-      imagePath.startsWith("/") ? imagePath : `/${imagePath}`
-    }`;
+    
+    console.log('Original imagePath:', imagePath);
+    console.log('UPLOAD_URL:', UPLOAD_URL);
+    
+    // Clean the image path - remove any leading slashes and uploads prefix
+    let cleanPath = imagePath;
+    
+    // Remove leading slashes
+    cleanPath = cleanPath.replace(/^\/+/, '');
+    
+    // Remove uploads/ prefix if it exists (to avoid double uploads/uploads/)
+    cleanPath = cleanPath.replace(/^uploads\//, '');
+    
+    console.log('Cleaned path:', cleanPath);
+    
+    // Construct the final URL - UPLOAD_URL already contains /uploads
+    const finalUrl = `${UPLOAD_URL}/${cleanPath}`;
+    console.log('Final URL:', finalUrl);
+    
+    return finalUrl;
   };
 
   if (loading) {
@@ -443,23 +460,6 @@ function FormFill() {
             </p>
           </div>
         )}
-
-        {/* Debug Info */}
-        <div className="mb-8 p-4 bg-white/5 rounded-2xl border border-white/10">
-          <h3 className="text-sm font-medium text-white/80 mb-2">
-            🔧 Debug Info:
-          </h3>
-          <div className="text-xs text-white/60 space-y-1">
-            <p>Form ID: {form._id}</p>
-            <p>Form Title: {form.title}</p>
-            <p>Questions Count: {form.questions?.length || 0}</p>
-            <p>
-              Questions Types:{" "}
-              {form.questions?.map((q) => q.type).join(", ") || "None"}
-            </p>
-            <p>First Question ID: {form.questions?.[0]?._id || "None"}</p>
-          </div>
-        </div>
 
         {/* Questions */}
         <div className="space-y-12">

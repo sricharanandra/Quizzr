@@ -294,27 +294,6 @@ function Dashboard() {
 
             {/* Right side */}
             <div className="flex items-center space-x-4">
-              {/* Debug buttons - remove in production */}
-              <button
-                onClick={addTestData}
-                className="px-3 py-2 bg-green-500/20 text-green-300 rounded-lg text-xs font-medium border border-green-500/30"
-              >
-                Add Test Data
-              </button>
-
-              <button
-                onClick={() => {
-                  console.log("=== DASHBOARD DEBUG ===");
-                  console.log("Forms:", forms);
-                  console.log("Filtered:", filteredForms);
-                  console.log("Loading:", loading);
-                  console.log("Search:", searchQuery);
-                  console.log("Filter:", selectedFilter);
-                }}
-                className="px-3 py-2 bg-blue-500/20 text-blue-300 rounded-lg text-xs font-medium border border-blue-500/30"
-              >
-                Debug
-              </button>
 
               <button className="p-3 text-white/60 hover:text-white hover:bg-white/10 rounded-2xl transition-all relative">
                 <BellIcon className="w-6 h-6" />
@@ -549,22 +528,6 @@ function Dashboard() {
               )}
 
               {/* Debug info */}
-              <div className="mt-8 p-4 bg-white/5 rounded-2xl border border-white/10 max-w-md mx-auto">
-                <p className="text-white/40 text-sm mb-2">Debug Info:</p>
-                <p className="text-white/60 text-xs">
-                  Total forms: {forms.length}
-                </p>
-                <p className="text-white/60 text-xs">
-                  Filtered: {filteredForms.length}
-                </p>
-                <p className="text-white/60 text-xs">Search: "{searchQuery}"</p>
-                <p className="text-white/60 text-xs">
-                  Filter: {selectedFilter}
-                </p>
-                <p className="text-white/60 text-xs">
-                  Loading: {loading.toString()}
-                </p>
-              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

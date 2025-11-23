@@ -44,13 +44,19 @@ function ImageUpload({
     formData.append("image", file);
 
     try {
-      const response = await axios.post(API_ENDPOINTS.UPLOAD, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      // Fixed: Use fetch instead of axios and correct endpoint
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://forms.sreus.tech/api';
+      const response = await fetch(`${apiUrl}/upload`, {
+        method: 'POST',
+        body: formData,
       });
 
-      onImageUpload(response.data.imageUrl);
+      if (!response.ok) {
+        throw new Error(`Upload failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      onImageUpload(data.url);
     } catch (error) {
       console.error("Error uploading image:", error);
       alert("Error uploading image. Please try again.");
